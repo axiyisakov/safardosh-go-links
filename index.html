@@ -159,14 +159,32 @@
 
       const query = "number=" + encodeURIComponent(number) + "&code=" + encodeURIComponent(code);
 
-      const deepLink = isAndroid
-        ? "intent://auth?" + query +
-          "#Intent;scheme=" + SCHEME +
-          ";package=" + PACKAGE +
-          ";S.browser_fallback_url=" + encodeURIComponent(PLAY_STORE) + ";end"
-        : SCHEME + "://auth?" + query;
+      const schemeLink = SCHEME + "://auth?" + query;
 
-      document.getElementById('openBtn').href = deepLink;
+      // href ni saqlab qo'yamiz (fallback uchun)
+      document.getElementById('openBtn').href = isAndroid ? PLAY_STORE : schemeLink;
+
+      document.getElementById('openBtn').addEventListener('click', function(e) {
+        e.preventDefault();
+
+        // Sahifa qoraymaydi — iframe orqali trigger
+        const iframe = document.createElement('iframe');
+        iframe.style.display = 'none';
+        iframe.src = schemeLink;
+        document.body.appendChild(iframe);
+
+        // Ilova ochilmasa store ga yo'naltir
+        const fallback = setTimeout(() => {
+          window.location.href = isAndroid ? PLAY_STORE : APP_STORE;
+        }, 2000);
+
+        // Ilova ochildi — foydalanuvchi sahifadan ketadi, timerni bekor qil
+        window.addEventListener('blur', () => clearTimeout(fallback), { once: true });
+
+        setTimeout(() => {
+          if (document.body.contains(iframe)) document.body.removeChild(iframe);
+        }, 1500);
+      });
     } else {
       document.getElementById('icon').style.display    = 'none';
       document.getElementById('otpCode').style.display = 'none';
