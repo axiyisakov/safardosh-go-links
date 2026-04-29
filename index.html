@@ -5,21 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Safardosh Go</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-    :root {
-      --bg: #0a0f1e;
-      --accent: #00d4aa;
-      --accent2: #7c6af7;
-      --text: #f0f4ff;
-      --muted: #8892a4;
-    }
-
     body {
-      background: var(--bg);
-      color: var(--text);
+      background: #0f1117;
+      color: #f0f4ff;
       font-family: 'Inter', sans-serif;
       min-height: 100vh;
       display: flex;
@@ -27,171 +19,120 @@
       justify-content: center;
     }
 
-    .bg-glow {
-      position: fixed; inset: 0;
-      background:
-        radial-gradient(ellipse 60% 50% at 20% 30%, rgba(0,212,170,0.12) 0%, transparent 70%),
-        radial-gradient(ellipse 50% 60% at 80% 70%, rgba(124,106,247,0.12) 0%, transparent 70%);
-      pointer-events: none;
-    }
-
     .card {
-      position: relative; z-index: 1;
       text-align: center;
-      padding: 3rem 2.5rem;
-      max-width: 380px; width: 90%;
+      padding: 2rem 1.75rem;
+      max-width: 340px;
+      width: 90%;
     }
 
     .logo {
-      font-family: 'Syne', sans-serif;
-      font-weight: 800; font-size: 1.6rem;
-      letter-spacing: -0.02em;
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #00d4aa;
+      margin-bottom: 2rem;
+      letter-spacing: 0.02em;
+    }
+
+    .icon {
+      width: 52px; height: 52px;
+      border-radius: 14px;
+      background: rgba(0,212,170,0.1);
+      border: 1px solid rgba(0,212,170,0.25);
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 1.25rem;
+    }
+
+    .otp-label {
+      font-size: 0.72rem;
+      font-weight: 500;
+      color: #8892a4;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
       margin-bottom: 0.3rem;
     }
 
-    .tagline { color: var(--muted); font-size: 0.85rem; margin-bottom: 2.5rem; }
-
-    .icon-wrap {
-      width: 64px; height: 64px; border-radius: 20px;
-      background: linear-gradient(135deg, rgba(0,212,170,0.15), rgba(124,106,247,0.15));
-      border: 1px solid rgba(0,212,170,0.3);
-      display: flex; align-items: center; justify-content: center;
-      margin: 0 auto 1.5rem;
-      animation: pulse 2s ease-in-out infinite;
-    }
-
-    @keyframes pulse {
-      0%, 100% { box-shadow: 0 0 0 0 rgba(0,212,170,0.2); }
-      50%       { box-shadow: 0 0 0 12px rgba(0,212,170,0); }
-    }
-
     .otp-code {
-      font-family: 'Syne', sans-serif; font-weight: 800;
-      font-size: 3rem; letter-spacing: 0.15em;
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-      margin-bottom: 0.5rem;
-    }
-
-    .status { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 700; margin-bottom: 0.4rem; }
-    .sub    { color: var(--muted); font-size: 0.82rem; line-height: 1.6; margin-bottom: 1.5rem; }
-
-    .spinner {
-      width: 36px; height: 36px;
-      border: 3px solid rgba(0,212,170,0.2);
-      border-top-color: var(--accent);
-      border-radius: 50%;
-      animation: spin 0.8s linear infinite;
-      margin: 0 auto 1.5rem;
-    }
-    @keyframes spin { to { transform: rotate(360deg); } }
-
-    .btn {
-      display: flex; align-items: center; justify-content: center; gap: 0.6rem;
-      width: 100%; padding: 1rem 1.5rem; border-radius: 16px;
-      font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1rem;
-      text-decoration: none; cursor: pointer;
-      transition: transform 0.15s, opacity 0.15s;
-      margin-bottom: 0.75rem; border: none;
-    }
-    .btn:active { opacity: 0.85; transform: scale(0.98); }
-    .btn-primary  { background: linear-gradient(135deg, var(--accent), #00a882); color: #0a0f1e; }
-    .btn-secondary { background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12); color: var(--text); }
-
-    .hint {
-      background: rgba(255,193,7,0.08);
-      border: 1px solid rgba(255,193,7,0.25);
-      border-radius: 12px;
-      padding: 0.85rem 1rem;
-      font-size: 0.8rem;
-      color: #ffc107;
-      line-height: 1.6;
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: #f0f4ff;
+      letter-spacing: 0.2em;
       margin-bottom: 1.5rem;
-      display: none;
     }
-    .hint.show { display: block; }
 
-    .store-links { display: none; gap: 0.75rem; flex-direction: column; margin-top: 0.5rem; }
-    .store-links.show { display: flex; }
-    .divider { color: var(--muted); font-size: 0.75rem; margin: 0.75rem 0 0.25rem; display: none; }
-    .divider.show { display: block; }
+    .open-btn {
+      display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+      width: 100%; padding: 0.9rem 1.25rem;
+      border-radius: 12px;
+      background: #00d4aa;
+      color: #0f1117;
+      font-size: 0.95rem;
+      font-weight: 700;
+      text-decoration: none;
+      margin-bottom: 1.25rem;
+      transition: opacity 0.15s;
+    }
+    .open-btn:active { opacity: 0.8; }
+
+    .divider {
+      font-size: 0.72rem;
+      color: #8892a4;
+      margin-bottom: 0.75rem;
+    }
+
+    .store-links { display: flex; gap: 0.5rem; flex-direction: column; }
 
     .store-btn {
-      display: flex; align-items: center; justify-content: center; gap: 0.6rem;
-      padding: 0.8rem 1.5rem; border-radius: 14px;
-      font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.85rem;
-      text-decoration: none; transition: transform 0.15s;
+      display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+      padding: 0.7rem 1rem; border-radius: 10px;
+      font-size: 0.8rem; font-weight: 600;
+      text-decoration: none;
+      border: 1px solid rgba(255,255,255,0.1);
+      color: #8892a4;
+      background: rgba(255,255,255,0.04);
     }
-    .store-btn:hover { transform: scale(1.02); }
-    .btn-android { background: rgba(0,212,170,0.1); border: 1px solid rgba(0,212,170,0.3); color: var(--accent); }
-    .btn-ios     { background: rgba(124,106,247,0.1); border: 1px solid rgba(124,106,247,0.3); color: #a89cf7; }
 
-    .hidden { display: none !important; }
+    .error { color: #8892a4; font-size: 0.9rem; }
   </style>
 </head>
 <body>
-  <div class="bg-glow"></div>
   <div class="card">
     <div class="logo">Safardosh Go</div>
-    <div class="tagline">Tasdiqlash</div>
 
-    <div class="icon-wrap" id="iconWrap">
-      <svg width="28" height="28" viewBox="0 0 24 24" fill="none"
+    <div class="icon" id="icon">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
            stroke="#00d4aa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <rect x="5" y="11" width="14" height="10" rx="2"/>
         <path d="M8 11V7a4 4 0 0 1 8 0v4"/>
       </svg>
     </div>
 
-    <div class="otp-code" id="otpCode"></div>
-    <div class="status"   id="status">Ilova ochilmoqda...</div>
-    <div class="sub"      id="sub">Safardosh Go da tasdiqlash amalga oshirilmoqda</div>
-    <div class="spinner"  id="spinner"></div>
+    <div class="otp-label" id="otpLabel"></div>
+    <div class="otp-code"  id="otpCode"></div>
 
-    <!-- Telegram uchun: brauzerda ochishni tavsiya qilish -->
-    <div class="hint" id="telegramHint">
-      ⚠️ Telegram brauzerida ilova ochilmaydi.<br>
-      Pastdagi tugmani bosib Chrome da oching.
-    </div>
-
-    <a class="btn btn-primary hidden" id="openBtn" href="#">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+    <a class="open-btn" id="openBtn" href="#">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none"
            stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
         <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
         <polyline points="15 3 21 3 21 9"/>
         <line x1="10" y1="14" x2="21" y2="3"/>
       </svg>
-      Ilovada ochish
+      Ilovani ochish
     </a>
 
-    <!-- Telegram Android uchun Chrome da ochish -->
-    <a class="btn btn-secondary hidden" id="chromeBtn" href="#">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
-           stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <circle cx="12" cy="12" r="10"/>
-        <circle cx="12" cy="12" r="4"/>
-        <line x1="21.17" y1="8" x2="12" y2="8"/>
-        <line x1="3.95" y1="6.06" x2="8.54" y2="14"/>
-        <line x1="10.88" y1="21.94" x2="15.46" y2="14"/>
-      </svg>
-      Chrome da ochish
-    </a>
-
-    <div class="divider" id="divider">Ilova yo'qmi?</div>
-    <div class="store-links" id="storeLinks">
-      <a class="store-btn btn-android" id="androidBtn" href="#">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+    <div class="divider">Ilova yo'qmi?</div>
+    <div class="store-links">
+      <a class="store-btn" id="androidBtn" href="#">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
           <path d="M17.523 15.34 19.937 11l-2.414-4.34A1 1 0 0 0 16.65 6H7.35a1 1 0 0 0-.873.66L4.063 11l2.414 4.34A1 1 0 0 0 7.35 16h9.3a1 1 0 0 0 .873-.66z"/>
         </svg>
-        Google Play dan yuklash
+        Google Play
       </a>
-      <a class="store-btn btn-ios" id="iosBtn" href="#">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+      <a class="store-btn" id="iosBtn" href="#">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
           <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
         </svg>
-        App Store dan yuklash
+        App Store
       </a>
     </div>
   </div>
@@ -201,12 +142,7 @@
     const APP_STORE  = "https://apps.apple.com/app/idXXXXXXXX";
     const SCHEME     = "safardoshgo";
     const PACKAGE    = "com.axiydev.safarbargo";
-    const ua         = navigator.userAgent;
-
-    const isAndroid  = /android/i.test(ua);
-    const isIOS      = /iphone|ipad|ipod/i.test(ua);
-    // Telegram in-app browser aniqlash
-    const isTelegram = /telegram/i.test(ua) || window.TelegramWebviewProxy !== undefined;
+    const isAndroid  = /android/i.test(navigator.userAgent);
 
     const params = new URLSearchParams(window.location.search);
     const code   = params.get("code")   || '';
@@ -215,61 +151,32 @@
     document.getElementById('androidBtn').href = PLAY_STORE;
     document.getElementById('iosBtn').href     = APP_STORE;
 
-    if (!(code || number)) {
-      document.getElementById('iconWrap').style.display = 'none';
-      document.getElementById('otpCode').style.display  = 'none';
-      document.getElementById('spinner').style.display  = 'none';
-      document.getElementById('status').textContent     = "Noto'g'ri havola";
-      document.getElementById('sub').textContent        = "Bu havola noto'g'ri yoki eskirgan";
-      document.getElementById('divider').classList.add('show');
-      document.getElementById('storeLinks').classList.add('show');
-    } else {
-      if (code) document.getElementById('otpCode').textContent = code;
-
-      const query    = "number=" + encodeURIComponent(number) + "&code=" + encodeURIComponent(code);
-      const pageUrl  = window.location.href;
-
-      // Chrome intent URL (to'g'ridan-to'g'ri ilovani ochadi)
-      const intentUrl = "intent://auth?" + query +
-                        "#Intent;scheme=" + SCHEME +
-                        ";package=" + PACKAGE +
-                        ";S.browser_fallback_url=" + encodeURIComponent(PLAY_STORE) +
-                        ";end";
-
-      // Custom scheme URL
-      const schemeUrl = SCHEME + "://auth?" + query;
-
-      document.getElementById('openBtn').href   = isAndroid ? intentUrl : schemeUrl;
-      // Chrome btn — joriy sahifani Chrome da ochadi
-      document.getElementById('chromeBtn').href = "googlechrome://" + pageUrl.replace(/^https?:\/\//, '');
-
-      if (isTelegram && isAndroid) {
-        // Telegram Android: avtomatik ishlamaydi, hint + tugmalar ko'rsat
-        document.getElementById('spinner').style.display = 'none';
-        document.getElementById('status').textContent    = "Ilovani ochish uchun";
-        document.getElementById('sub').textContent       = "Quyidagi tugmalardan birini bosing";
-        document.getElementById('telegramHint').classList.add('show');
-        document.getElementById('openBtn').classList.remove('hidden');
-        document.getElementById('chromeBtn').classList.remove('hidden');
-        document.getElementById('divider').classList.add('show');
-        document.getElementById('storeLinks').classList.add('show');
-      } else {
-        // Chrome / Safari / boshqa brauzer — avtomatik redirect
-        window.location.href = isAndroid ? intentUrl : schemeUrl;
-
-        const fallbackTimer = setTimeout(() => {
-          document.getElementById('spinner').style.display = 'none';
-          document.getElementById('status').textContent    = "Ilova ochilmadi";
-          document.getElementById('sub').textContent       = "Quyidagi tugmani bosib ilovani oching";
-          document.getElementById('openBtn').classList.remove('hidden');
-          document.getElementById('divider').classList.add('show');
-          document.getElementById('storeLinks').classList.add('show');
-        }, 2500);
-
-        document.addEventListener('visibilitychange', () => {
-          if (document.hidden) clearTimeout(fallbackTimer);
-        });
+    if (code || number) {
+      if (code) {
+        document.getElementById('otpLabel').textContent = "Tasdiqlash kodi";
+        document.getElementById('otpCode').textContent  = code;
       }
+
+      const query = "number=" + encodeURIComponent(number) + "&code=" + encodeURIComponent(code);
+
+      const deepLink = isAndroid
+        ? "intent://auth?" + query +
+          "#Intent;scheme=" + SCHEME +
+          ";package=" + PACKAGE +
+          ";S.browser_fallback_url=" + encodeURIComponent(PLAY_STORE) + ";end"
+        : SCHEME + "://auth?" + query;
+
+      document.getElementById('openBtn').href = deepLink;
+    } else {
+      document.getElementById('icon').style.display    = 'none';
+      document.getElementById('otpCode').style.display = 'none';
+      document.getElementById('otpLabel').style.display = 'none';
+      document.getElementById('openBtn').style.display = 'none';
+      document.querySelector('.divider').style.display = 'none';
+      const err = document.createElement('p');
+      err.className = 'error';
+      err.textContent = "Havola noto'g'ri yoki eskirgan";
+      document.querySelector('.card').insertBefore(err, document.getElementById('androidBtn').parentElement);
     }
   </script>
 </body>
