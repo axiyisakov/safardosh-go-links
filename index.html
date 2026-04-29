@@ -182,7 +182,7 @@
   </div>
 
   <script>
-    const PLAY_STORE = "https://play.google.com/store/apps/details?id=com.safardosh.go";
+    const PLAY_STORE = "https://play.google.com/store/apps/details?id=com.axiydev.safarbargo";
     const APP_STORE  = "https://apps.apple.com/app/idXXXXXXXX";
     const ua         = navigator.userAgent;
 
@@ -218,7 +218,7 @@
       document.getElementById('sub').textContent = "Safardosh Go da tasdiqlash amalga oshirilmoqda";
 
       // Deep link — ikkalasini birga yuborish
-      const deepLink = "safardosh_go://auth?code=" + (code || '') + "&number=" + (number || '');
+      const deepLink = "safarbargo://auth?code=" + (code || '') + "&number=" + (number || '');
       window.location.href = deepLink;
 
       setTimeout(() => {
