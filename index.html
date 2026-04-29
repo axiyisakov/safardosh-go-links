@@ -25,7 +25,6 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      overflow: hidden;
     }
 
     .bg-glow {
@@ -67,6 +66,8 @@
       width: 64px;
       height: 64px;
       border-radius: 20px;
+      background: linear-gradient(135deg, rgba(0,212,170,0.15), rgba(124,106,247,0.15));
+      border: 1px solid rgba(0,212,170,0.3);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -74,32 +75,21 @@
       animation: pulse 2s ease-in-out infinite;
     }
 
-    .icon-otp {
-      background: linear-gradient(135deg, rgba(0,212,170,0.15), rgba(124,106,247,0.15));
-      border: 1px solid rgba(0,212,170,0.3);
-    }
-
-    .icon-phone {
-      background: linear-gradient(135deg, rgba(124,106,247,0.15), rgba(0,212,170,0.15));
-      border: 1px solid rgba(124,106,247,0.3);
-    }
-
     @keyframes pulse {
       0%, 100% { box-shadow: 0 0 0 0 rgba(0,212,170,0.2); }
       50%       { box-shadow: 0 0 0 12px rgba(0,212,170,0); }
     }
 
-    .value {
+    .otp-code {
       font-family: 'Syne', sans-serif;
       font-weight: 800;
+      font-size: 3rem;
+      letter-spacing: 0.15em;
       background: linear-gradient(135deg, var(--accent), var(--accent2));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       margin-bottom: 0.5rem;
     }
-
-    .value-otp   { font-size: 2.8rem; letter-spacing: 0.15em; }
-    .value-phone { font-size: 1.6rem; letter-spacing: 0.05em; }
 
     .status {
       font-family: 'Syne', sans-serif;
@@ -112,154 +102,172 @@
       color: var(--muted);
       font-size: 0.82rem;
       line-height: 1.6;
+      margin-bottom: 1.5rem;
     }
 
     .spinner {
-      width: 40px;
-      height: 40px;
+      width: 36px;
+      height: 36px;
       border: 3px solid rgba(0,212,170,0.2);
       border-top-color: var(--accent);
       border-radius: 50%;
       animation: spin 0.8s linear infinite;
-      margin: 1.5rem auto 0;
+      margin: 0 auto 1.5rem;
     }
 
     @keyframes spin { to { transform: rotate(360deg); } }
 
+    .open-btn {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+      width: 100%;
+      padding: 1rem 1.5rem;
+      border-radius: 16px;
+      background: linear-gradient(135deg, var(--accent), #00a882);
+      color: #0a0f1e;
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 1rem;
+      text-decoration: none;
+      cursor: pointer;
+      transition: transform 0.15s, opacity 0.15s;
+      margin-bottom: 1rem;
+    }
+
+    .open-btn.show { display: flex; }
+    .open-btn:active { opacity: 0.85; transform: scale(0.98); }
+
     .store-links {
       display: none;
-      gap: 1rem;
-      margin-top: 2rem;
+      gap: 0.75rem;
       flex-direction: column;
     }
 
     .store-links.show { display: flex; }
+
+    .divider {
+      color: var(--muted);
+      font-size: 0.75rem;
+      margin: 0.5rem 0;
+      display: none;
+    }
+
+    .divider.show { display: block; }
 
     .store-btn {
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 0.6rem;
-      padding: 0.85rem 1.5rem;
+      padding: 0.8rem 1.5rem;
       border-radius: 14px;
       font-family: 'Syne', sans-serif;
       font-weight: 700;
-      font-size: 0.9rem;
+      font-size: 0.85rem;
       text-decoration: none;
       transition: transform 0.15s;
     }
 
     .store-btn:hover { transform: scale(1.02); }
-    .btn-android { background: linear-gradient(135deg, #00d4aa, #00a882); color: #0a0f1e; }
-    .btn-ios     { background: linear-gradient(135deg, #7c6af7, #5a48d4); color: #fff; }
+    .btn-android { background: rgba(0,212,170,0.1); border: 1px solid rgba(0,212,170,0.3); color: var(--accent); }
+    .btn-ios     { background: rgba(124,106,247,0.1); border: 1px solid rgba(124,106,247,0.3); color: #a89cf7; }
   </style>
 </head>
 <body>
   <div class="bg-glow"></div>
   <div class="card">
     <div class="logo">Safardosh Go</div>
-    <div class="tagline" id="tagline"></div>
+    <div class="tagline">Tasdiqlash</div>
 
     <div class="icon-wrap" id="iconWrap">
-      <svg id="iconSvg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></svg>
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none"
+           stroke="#00d4aa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="5" y="11" width="14" height="10" rx="2"/>
+        <path d="M8 11V7a4 4 0 0 1 8 0v4"/>
+      </svg>
     </div>
 
-    <div class="value" id="valueDisplay"></div>
+    <div class="otp-code" id="otpCode"></div>
     <div class="status" id="status">Ilova ochilmoqda...</div>
-    <div class="sub" id="sub"></div>
+    <div class="sub" id="sub">Safardosh Go da tasdiqlash amalga oshirilmoqda</div>
     <div class="spinner" id="spinner"></div>
+
+    <a class="open-btn" id="openBtn" href="#">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+           stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+        <polyline points="15 3 21 3 21 9"/>
+        <line x1="10" y1="14" x2="21" y2="3"/>
+      </svg>
+      Ilovada ochish
+    </a>
+
+    <div class="divider" id="divider">Ilova yo'qmi?</div>
 
     <div class="store-links" id="storeLinks">
       <a class="store-btn btn-android" id="androidBtn" href="#">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.523 15.34 19.937 11l-2.414-4.34A1 1 0 0 0 16.65 6H7.35a1 1 0 0 0-.873.66L4.063 11l2.414 4.34A1 1 0 0 0 7.35 16h9.3a1 1 0 0 0 .873-.66z"/></svg>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M17.523 15.34 19.937 11l-2.414-4.34A1 1 0 0 0 16.65 6H7.35a1 1 0 0 0-.873.66L4.063 11l2.414 4.34A1 1 0 0 0 7.35 16h9.3a1 1 0 0 0 .873-.66z"/>
+        </svg>
         Google Play dan yuklash
       </a>
       <a class="store-btn btn-ios" id="iosBtn" href="#">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
+        </svg>
         App Store dan yuklash
       </a>
     </div>
   </div>
 
   <script>
-    const PLAY_STORE  = "https://play.google.com/store/apps/details?id=com.axiydev.safarbargo";
-    const APP_STORE   = "https://apps.apple.com/app/idXXXXXXXX";
-    const SCHEME      = "safardoshgo";
-    const PACKAGE     = "com.axiydev.safarbargo";
-    const ua          = navigator.userAgent;
+    const PLAY_STORE = "https://play.google.com/store/apps/details?id=com.axiydev.safarbargo";
+    const APP_STORE  = "https://apps.apple.com/app/idXXXXXXXX";
+    const SCHEME     = "safardoshgo";
 
-    const params      = new URLSearchParams(window.location.search);
-    const code        = params.get("code");
-    const number      = params.get("number");
+    const params = new URLSearchParams(window.location.search);
+    const code   = params.get("code")   || '';
+    const number = params.get("number") || '';
 
     document.getElementById('androidBtn').href = PLAY_STORE;
     document.getElementById('iosBtn').href     = APP_STORE;
 
-    const valid = code || number;
-
-    if (valid) {
-      document.getElementById('tagline').textContent = "Tasdiqlash";
-      document.getElementById('iconWrap').classList.add('icon-otp');
-      document.getElementById('iconSvg').setAttribute('stroke', '#00d4aa');
-      document.getElementById('iconSvg').innerHTML = `
-        <rect x="5" y="11" width="14" height="10" rx="2"/>
-        <path d="M8 11V7a4 4 0 0 1 8 0v4"/>
-      `;
-
-      let display = '';
-      if (code)   display += code;
-      if (number) {
-        if (display) display += '\n';
-        display += number.replace(/(\d{3})(\d{2})(\d{3})(\d{2})(\d{2})/, '+$1 $2 $3 $4 $5');
-      }
-
-      const valueEl = document.getElementById('valueDisplay');
-      valueEl.classList.add('value-otp');
-      valueEl.style.whiteSpace = 'pre';
-      valueEl.textContent = display;
-
-      document.getElementById('sub').textContent = "Safardosh Go da tasdiqlash amalga oshirilmoqda";
-
-      const otpCode = code   || '';
-      const phone   = number || '';
-
-      let deepLink;
-      if (/android/i.test(ua)) {
-        deepLink =
-          "intent://auth?number=" + encodeURIComponent(phone) +
-          "&code=" + encodeURIComponent(otpCode) +
-          "#Intent;scheme=" + SCHEME + ";package=" + PACKAGE + ";end";
-      } else {
-        deepLink =
-          SCHEME + "://auth?number=" + encodeURIComponent(phone) +
-          "&code=" + encodeURIComponent(otpCode);
-      }
-
-      window.location.href = deepLink;
-
-      setTimeout(() => {
-        if (!document.hidden) {
-          document.getElementById('spinner').style.display = 'none';
-          document.getElementById('status').textContent    = "Ilova topilmadi";
-          document.getElementById('sub').textContent       = "Safardosh Go ni yuklab oling";
-          document.getElementById('storeLinks').classList.add('show');
-
-          if (/android/i.test(ua)) {
-            window.location.href = PLAY_STORE;
-          } else if (/iphone|ipad/i.test(ua)) {
-            window.location.href = APP_STORE;
-          }
-        }
-      }, 2500);
-
-    } else {
-      document.getElementById('tagline').textContent    = "Aqlli safar hamrohi";
+    if (!(code || number)) {
       document.getElementById('iconWrap').style.display = 'none';
+      document.getElementById('otpCode').style.display  = 'none';
+      document.getElementById('spinner').style.display  = 'none';
       document.getElementById('status').textContent     = "Noto'g'ri havola";
       document.getElementById('sub').textContent        = "Bu havola noto'g'ri yoki eskirgan";
-      document.getElementById('spinner').style.display  = 'none';
+      document.getElementById('divider').classList.add('show');
       document.getElementById('storeLinks').classList.add('show');
+      return;
     }
+
+    const query    = "number=" + encodeURIComponent(number) + "&code=" + encodeURIComponent(code);
+    const deepLink = SCHEME + "://auth?" + query;
+
+    if (code) document.getElementById('otpCode').textContent = code;
+    document.getElementById('openBtn').href = deepLink;
+
+    // Avtomatik redirect — Telegram WebView custom scheme ni tizimga uzatadi
+    window.location.href = deepLink;
+
+    // Fallback: 2.5s ichida ilova ochilmasa tugma + store ko'rsat
+    const fallbackTimer = setTimeout(() => {
+      document.getElementById('spinner').style.display = 'none';
+      document.getElementById('status').textContent    = "Ilova ochilmadi";
+      document.getElementById('sub').textContent       = "Quyidagi tugmani bosib ilovani oching";
+      document.getElementById('openBtn').classList.add('show');
+      document.getElementById('divider').classList.add('show');
+      document.getElementById('storeLinks').classList.add('show');
+    }, 2500);
+
+    // Ilova ochildi — foydalanuvchi sahifadan ketdi
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) clearTimeout(fallbackTimer);
+    });
   </script>
 </body>
 </html>
