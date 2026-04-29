@@ -182,21 +182,22 @@
   </div>
 
   <script>
-    const PLAY_STORE = "https://play.google.com/store/apps/details?id=com.axiydev.safarbargo";
-    const APP_STORE  = "https://apps.apple.com/app/idXXXXXXXX";
-    const ua         = navigator.userAgent;
+    const PLAY_STORE  = "https://play.google.com/store/apps/details?id=com.axiydev.safarbargo";
+    const APP_STORE   = "https://apps.apple.com/app/idXXXXXXXX";
+    const SCHEME      = "safardoshgo";
+    const PACKAGE     = "com.axiydev.safarbargo";
+    const ua          = navigator.userAgent;
 
-    const params = new URLSearchParams(window.location.search);
-    const code   = params.get("code");
-    const number = params.get("number");
+    const params      = new URLSearchParams(window.location.search);
+    const code        = params.get("code");
+    const number      = params.get("number");
 
     document.getElementById('androidBtn').href = PLAY_STORE;
     document.getElementById('iosBtn').href     = APP_STORE;
 
-    let valid = code || number;
+    const valid = code || number;
 
     if (valid) {
-      // Icon — OTP va phone ikkalasi bor
       document.getElementById('tagline').textContent = "Tasdiqlash";
       document.getElementById('iconWrap').classList.add('icon-otp');
       document.getElementById('iconSvg').setAttribute('stroke', '#00d4aa');
@@ -205,26 +206,35 @@
         <path d="M8 11V7a4 4 0 0 1 8 0v4"/>
       `;
 
-      // Ko'rsatiladigan qiymat: OTP + telefon
       let display = '';
       if (code)   display += code;
       if (number) {
         if (display) display += '\n';
         display += number.replace(/(\d{3})(\d{2})(\d{3})(\d{2})(\d{2})/, '+$1 $2 $3 $4 $5');
       }
-      document.getElementById('valueDisplay').classList.add('value-otp');
-      document.getElementById('valueDisplay').style.whiteSpace = 'pre';
-      document.getElementById('valueDisplay').textContent = display;
+
+      const valueEl = document.getElementById('valueDisplay');
+      valueEl.classList.add('value-otp');
+      valueEl.style.whiteSpace = 'pre';
+      valueEl.textContent = display;
+
       document.getElementById('sub').textContent = "Safardosh Go da tasdiqlash amalga oshirilmoqda";
 
-      // Deep link — ikkalasini birga yuborish
+      const otpCode = code   || '';
+      const phone   = number || '';
+
       let deepLink;
       if (/android/i.test(ua)) {
-        deepLink = "intent://auth?code=" + (code || '') + "&number=" + (number || '') +
-                   "#Intent;scheme=safardosh_go;package=com.axiydev.safarbargo;end";
+        deepLink =
+          "intent://auth?number=" + encodeURIComponent(phone) +
+          "&code=" + encodeURIComponent(otpCode) +
+          "#Intent;scheme=" + SCHEME + ";package=" + PACKAGE + ";end";
       } else {
-        deepLink = "safardosh_go://auth?code=" + (code || '') + "&number=" + (number || '');
+        deepLink =
+          SCHEME + "://auth?number=" + encodeURIComponent(phone) +
+          "&code=" + encodeURIComponent(otpCode);
       }
+
       window.location.href = deepLink;
 
       setTimeout(() => {
