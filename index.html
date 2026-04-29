@@ -218,7 +218,13 @@
       document.getElementById('sub').textContent = "Safardosh Go da tasdiqlash amalga oshirilmoqda";
 
       // Deep link — ikkalasini birga yuborish
-      const deepLink = "safardosh_go://auth?code=" + (code || '') + "&number=" + (number || '');
+      let deepLink;
+      if (/android/i.test(ua)) {
+        deepLink = "intent://auth?code=" + (code || '') + "&number=" + (number || '') +
+                   "#Intent;scheme=safardosh_go;package=com.axiydev.safarbargo;end";
+      } else {
+        deepLink = "safardosh_go://auth?code=" + (code || '') + "&number=" + (number || '');
+      }
       window.location.href = deepLink;
 
       setTimeout(() => {
